@@ -1,0 +1,25 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+<div class="card individualProduct" style="width: 50%;">
+    <img src="{{p.image}}" class="card-img-top" alt="...">
+    <div class="card-body">
+
+    <h5 class="card-title">{{p.title}}</h5>
+    
+    <p class="card-text">{{p.product_type}}</p>
+    <p class="card-text">{{p.content}}</p>
+    <p class="card-text">${{p.price}}</p>
+    <form action="{% url 'shop-cartupdate' %}" method="POST">
+        {% csrf_token %}
+        <div class="d-none">
+            <input type="text" value="{{ request.user.id }}" name="username" required='' id="id_product">
+        </div>
+        <div class="d-none">
+            <input type="text" value="{{ p.product_id }}" name="product" required='' id="id_product">
+        </div>
+        <input type="submit" class="btn btn-primary" value="Add To Cart">
+    </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a class="navbar-brand" href="#">BuildaPC</a>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'shop-index' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'shop-products' %}">View All Products</a>
+          </li>
+          {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'shop-cart' %}">Cart</a>
+          </li>
+          {% endif %}
+        </ul>
+        {% if request.user.is_authenticated %}
+        <span class="nav-link" style='color: rgba(22, 18, 18, 0.575);'>Hello, {{ request.user }}</span>
+        <form class="d-flex" action="{% url 'shop-logout' %}">
+          <button class="btn btn-danger">Logout</button>
+        </form>
+        {% else %}
+        <form class="d-flex" style="padding-right: 0.5em;" action="{% url 'shop-register' %}">
+            <button class="btn btn-primary">Register</button>
+          </form>
+        <form class="d-flex" action="{% url 'shop-login' %}">
+          <button class="btn btn-success">Login</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  </nav>

@@ -1,0 +1,27 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+{% for message in messages %}
+<p class='messages {{ message.tags }}'>{{ message }}</p>
+{% endfor %} 
+<div class='form-login-register'>
+    <h2>Login</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_username" class="form-label">Username :</label>
+            <input type="text" name="username" maxlength="150" class="form-control" id="id_username">
+        </div>
+        <div class="mb-3">
+            <label for="id_password1" class="form-label">Password :</label>
+            <input type="password" name="password1" autocomplete='new-password' maxlength="150" class="form-control" id="id_password1">
+        </div>
+
+        <input type='submit' class='btn btn-primary' value = 'Submit'>
+
+    </form>
+</div>
+{% for message in messages %}
+<p class='messages {{ message.tags }}'>{{ message }}</p>
+{% endfor %} 
+<div class='mt-2 text-center'>Don't have an account? <a class='text-drecoration-none' href="{% url 'shop-register' %}">Sign Up</a></div>
+{% endblock %}

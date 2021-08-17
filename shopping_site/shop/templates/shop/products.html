@@ -1,0 +1,36 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+
+{% for message in messages %}
+<p class='messages {{ message.tags }}'>{{ message }}</p>
+{% endfor %} 
+
+<h1 style='text-align: center;'> All Products </h1>
+<div class='row gx-5 products' style='text-align:center'>
+{% for p in products %}
+    <div class='col-3'>
+        <div class="card" style="width: 18rem;border:0px;">
+            <img src="{{p.image}}" class="card-img-top" alt="...">
+            <div class="card-body">
+            <a class="text-decoration-none" style='color:black;'href="{% url 'shop-individual' product_id=p.product_id %}" >
+                <h5 class="card-title">{{ p.title }}</h5>
+            </a>
+            <p class="card-text">{{p.product_type}}</p>
+            <p class="card-text">${{p.price}}</p>
+            <form action="{% url 'shop-cartupdate' %}" method="POST">
+                {% csrf_token %}
+                <div class="d-none">
+                    <input type="text" value="{{ request.user.id }}" name="username" required='' id="id_product">
+                </div>
+                <div class="d-none">
+                    <input type="text" value="{{ p.product_id }}" name="product" required='' id="id_product">
+                </div>
+                <input type="submit" class="btn btn-primary" value="Add To Cart">
+            </form>
+            </div>
+        </div>
+    </div>
+
+{% endfor %}
+</div>
+{% endblock %}

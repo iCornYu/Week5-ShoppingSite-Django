@@ -1,0 +1,52 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+{% for message in messages %}
+<p class='messages {{ message.tags }}'>{{ message }}</p>
+{% endfor %} 
+<table class="table cart-style" >
+    <thead>
+      <tr>
+        <th scope="col"><h1>Your Cart</h1></th>
+        <th scope="col">Item</th>
+        <th scope="col">Price</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for p in cart %}
+      <tr>
+        <td><img src="{{p.product.image}}" style="width:200px; height:auto;" alt="..."></td>
+        <td>{{p.product.title}}</td>
+        <td>{{p.product.price}}</td>
+        <td>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Delete
+            </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Item - Are you sure?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    This action is irreversible. Do you wish to continue?
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    
+                    <form action="{% url 'shop-cartdelete' cart_id=p.cart_id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-danger" value="Delete">
+                    </form>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  
+</div>
+{% endblock %}
